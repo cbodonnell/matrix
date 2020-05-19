@@ -33,7 +33,7 @@ inbound = {
     4: [300, 600],
     5: [600, 700],
     6: [500, 700],
-    7: []
+    7: [800]
 }
 
 
@@ -53,9 +53,28 @@ turn_matrix = np.array(
 
 
 if __name__ == '__main__':
-    origin = 100
-    destination = 800
+    origin_node = 1
+    destination_node = 6
     # Dijkstra
+    queue = [inbound[destination_node]]
+    finished = False
+    step = 0
+    while not finished:
+        block = []
+        for destination in queue[step]:
+            if destination in outbound[origin_node]:
+                finished = True
+                print('Finished on link %i' % destination)
+            else:
+                for origin in links:
+                    if turn_matrix[links[origin]][links[destination]] and origin not in block and origin not in queue[step]:
+                        block.append(origin)
+        if not finished:
+            queue.append(block)
+            step += 1
+
+    print(queue)
     # [[800]]
+
     # [[800], [500, 700]]
     # ...
