@@ -1,5 +1,4 @@
 import numpy as np
-import random
 from classes import Network
 
 links = {
@@ -56,37 +55,5 @@ turn_matrix = np.array(
 if __name__ == '__main__':
     # TODO: Network builder
     network = Network(links, outbound, inbound, turn_matrix)
-    # TODO: Network.find_path(origin_node, destination_node)
-    origin_node = 1
-    destination_node = 7
-    # Dijkstra
-    queue = [network.inbound[destination_node]]
-    finished = False
-    step = 0
-    while not finished:
-        block = []
-        for destination in queue[step]:
-            if destination in network.outbound[origin_node]:
-                finished = True
-                print('Finished on link %i' % destination)
-            else:
-                for origin in network.links:
-                    if network.turn_matrix[network.links[origin]][network.links[destination]] \
-                            and origin not in block \
-                            and origin not in queue[step]:
-                        block.append(origin)
-        if not finished:
-            queue.append(block)
-            step += 1
-    print('Queue:', queue)
-    starts = [destination for destination in queue[step] if destination in network.outbound[origin_node]]
-    path = [random.choice(starts)]
-    while step > 0:
-        step -= 1
-        origin = path[-1]
-        block = []
-        for destination in queue[step]:
-            if network.turn_matrix[network.links[origin]][network.links[destination]]:
-                block.append(destination)
-        path.append(random.choice(block))
-    print('Path:', path)
+    path = network.find_path(1, 7)
+    print(path)
