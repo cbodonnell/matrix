@@ -1,5 +1,5 @@
 import numpy as np
-from classes import Network
+from networks.models import Network
 
 links = {
     100: 0,
