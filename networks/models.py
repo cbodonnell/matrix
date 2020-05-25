@@ -8,7 +8,7 @@ class Network:
         self.outbound = outbound
         self.turn_matrix = turn_matrix
 
-    # TODO: Add in weight based on length/travel_time/"cost"
+    # TODO: Add in 'weight' to queue based on a link directional 'cost'
     def find_path(self, origin_node, destination_node):
         # Dijkstra
         queue = [self.inbound[destination_node]]
