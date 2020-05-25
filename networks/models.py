@@ -2,12 +2,13 @@ import random
 
 
 class Network:
-    def __init__(self, links, outbound, inbound, turn_matrix):
+    def __init__(self, links, inbound, outbound, turn_matrix):
         self.links = links
-        self.outbound = outbound
         self.inbound = inbound
+        self.outbound = outbound
         self.turn_matrix = turn_matrix
 
+    # TODO: Add in weight based on length/travel_time/"cost"
     def find_path(self, origin_node, destination_node):
         # Dijkstra
         queue = [self.inbound[destination_node]]
@@ -21,6 +22,7 @@ class Network:
                     # print('Finished on link %i' % destination)
                 else:
                     for origin in self.links:
+                        origin = int(origin)
                         if self.turn_matrix[self.links[origin]][self.links[destination]] \
                                 and origin not in block \
                                 and origin not in queue[step]:
