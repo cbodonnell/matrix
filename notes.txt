@@ -1,0 +1,48 @@
+origin = "a"
+destination = "d"
+// initialize paths with origin node already "complete".  outbound links yield other costs and those remaining are 'inf'.  all paths except origin are not complete
+// while !paths[destination]["complete"]
+// lowest cost link from current node is the next "complete" path and other node of that link becomes the current node and link becomes the current link
+// repopulate all incomplete paths based on current node and link
+paths = {
+	"a": {
+		"complete": true,
+		"cost": 0,
+		"from": "a"
+	},
+	"b": {
+		"complete": true,
+		"cost": 20,
+		"from": "a"
+	},
+	"c": {
+		"complete": true,
+		"cost": 40,
+		"from": "f"
+	},
+	"d": {
+		"complete": true,
+		"cost": 50,
+		"from": "c"
+	},
+	"e": {
+		"complete": false,
+		"cost": inf,
+		"from": "a"
+	},
+	"f": {
+		"complete": true,
+		"cost": 30,
+		"from": "b"
+	},
+	"g": {
+		"complete": false,
+		"cost": 90,
+		"from": "a"
+	},
+	"h": {
+		"complete": false,
+		"cost": 60,
+		"from": "c"
+	}
+}
