@@ -37,7 +37,7 @@ links = {
         'start': 1,
         'end': 4,
         'costs': {
-            1: 5
+            1: 25
         },
         'opposite': {
             1: 4,
@@ -61,7 +61,7 @@ links = {
         'start': 3,
         'end': 6,
         'costs': {
-            3: 10
+            3: 30
         },
         'opposite': {
             3: 6,
@@ -108,26 +108,6 @@ links = {
     }
 }
 
-
-# Node dictionary with 'inbound' links
-# inbound = {
-#     1: [100],
-#     2: [100, 200, 400],
-#     3: [200],
-#     4: [300, 600],
-#     5: [600, 700],
-#     6: [500, 700],
-#     7: [800]
-# }
-# outbound = {
-#     1: [100, 300],
-#     2: [100, 200],
-#     3: [200, 500],
-#     4: [600],
-#     5: [400, 600, 700],
-#     6: [700, 800],
-#     7: []
-# }
 # Node dictionary
 nodes = {
     1: {
@@ -181,7 +161,7 @@ if __name__ == '__main__':
     origin_node = 1
     destination_node = 7
     start_time = time.time()
-    # Dijkstra
+    # Dijkstra's
     queue = {
         origin_node: {
             'complete': True,
@@ -204,19 +184,14 @@ if __name__ == '__main__':
                 'from': [origin_node]
             }
     current_node = origin_node
-    current_link = None
     while not queue[destination_node]['complete']:
         cheapest_node = None
         lowest_cost = math.inf
-        # next_moves = [(links[link]['opposite'][current_node], link) for link in nodes[current_node]['outbound']]
         for node in queue:
             if not queue[node]['complete'] \
                     and queue[node]['cost'] < lowest_cost:
                     cheapest_node = node
                     lowest_cost = queue[node]['cost']
-        for link in nodes[current_node]['outbound']:
-            if links[link]['opposite'][current_node] == cheapest_node:
-                cheapest_link = link
         current_node = cheapest_node
         queue[current_node]['complete'] = True
         for link in nodes[current_node]['outbound']:
@@ -228,7 +203,6 @@ if __name__ == '__main__':
                 else:
                     queue[links[link]['opposite'][current_node]]['from'] = [current_node]
                     queue[links[link]['opposite'][current_node]]['cost'] = new_cost
-        # print(queue)
     cost = queue[destination_node]['cost']
     path = [destination_node]
     while path[0] != origin_node:
