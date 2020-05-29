@@ -15,15 +15,26 @@ def find_path():
     origin_node = int(request.args.get('origin', None))
     destination_node = int(request.args.get('destination', None))
     # TODO: Refactor to network constructor method
-    inbound = {int(k): v['inbound'] for k, v in resource['nodes'].items()}
-    outbound = {int(k): v['outbound'] for k, v in resource['nodes'].items()}
-    links = {int(k): i for i, k in enumerate(resource['links'])}
-    num_links = len(resource['links'])
-    turn_matrix = np.full((num_links, num_links), False)
-    for origin in resource['links']:
-        for destination in resource['links'][origin]['destinations']:
-            turn_matrix[links[int(origin)]][links[destination]] = True
-    network = Network(links, inbound, outbound, turn_matrix)
+    # inbound = {int(k): v['inbound'] for k, v in resource['nodes'].items()}
+    # outbound = {int(k): v['outbound'] for k, v in resource['nodes'].items()}
+    nodes = {int(k): v for k, v in resource['nodes'].items()}
+    links = {int(k): v for k, v in resource['links'].items()}
+    for link in links:
+        links[link]['costs'] = {
+            int(links[link]['start']): links[link]['attributes']['speeds'][str(links[link]['start'])]
+        }
+        if not links[link]['attributes']['isOneWay']:
+            links[link]['costs'][int(links[link]['end'])] = links[link]['attributes']['speeds'][str(links[link]['end'])]
+        links[link]['opposite'] = {
+            links[link]['start']: links[link]['end'],
+            links[link]['end']: links[link]['start']
+        }
+    # num_links = len(resource['links'])
+    # turn_matrix = np.full((num_links, num_links), False)
+    # for origin in resource['links']:
+    #     for destination in resource['links'][origin]['destinations']:
+    #         turn_matrix[links[int(origin)]][links[destination]] = True
+    network = Network(nodes, links)
     path = network.find_path(origin_node, destination_node)
     return jsonify(path)
 

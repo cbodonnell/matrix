@@ -1,45 +1,58 @@
 import random
+import math
 
 
 class Network:
-    def __init__(self, links, inbound, outbound, turn_matrix):
+    def __init__(self, nodes, links):
+        self.nodes = nodes
         self.links = links
-        self.inbound = inbound
-        self.outbound = outbound
-        self.turn_matrix = turn_matrix
+        # self.turn_matrix = turn_matrix
 
-    # TODO: Add in 'weight' to queue based on a link directional 'cost'
     def find_path(self, origin_node, destination_node):
-        # Dijkstra
-        queue = [self.inbound[destination_node]]
-        finished = False
-        step = 0
-        while not finished:
-            block = []
-            for destination in queue[step]:
-                if destination in self.outbound[origin_node]:
-                    finished = True
-                    # print('Finished on link %i' % destination)
-                else:
-                    for origin in self.links:
-                        origin = int(origin)
-                        if self.turn_matrix[self.links[origin]][self.links[destination]] \
-                                and origin not in block \
-                                and origin not in queue[step]:
-                            block.append(origin)
-            if not finished:
-                queue.append(block)
-                step += 1
-        # print('Queue:', queue)
-        starts = [destination for destination in queue[step] if destination in self.outbound[origin_node]]
-        path = [random.choice(starts)]
-        while step > 0:
-            step -= 1
-            origin = path[-1]
-            block = []
-            for destination in queue[step]:
-                if self.turn_matrix[self.links[origin]][self.links[destination]]:
-                    block.append(destination)
-            path.append(random.choice(block))
-        # print('Path:', path)
+        # Dijkstra's
+        queue = {
+            origin_node: {
+                'complete': True,
+                'cost': 0,
+                'from': [origin_node]
+            }
+        }
+        for link in self.nodes[origin_node]['outbound']:
+            destination = self.links[link]['opposite'][origin_node]
+            queue[destination] = {
+                'complete': False,
+                'cost': self.links[link]['costs'][origin_node],
+                'from': [origin_node]
+            }
+        for node in self.nodes:
+            if node not in queue:
+                queue[node] = {
+                    'complete': False,
+                    'cost': math.inf,
+                    'from': [origin_node]
+                }
+        # current_node = origin_node
+        while not queue[destination_node]['complete']:
+            cheapest_node = None
+            lowest_cost = math.inf
+            for node in queue:
+                if not queue[node]['complete'] \
+                        and queue[node]['cost'] < lowest_cost:
+                    cheapest_node = node
+                    lowest_cost = queue[node]['cost']
+            current_node = cheapest_node
+            queue[current_node]['complete'] = True
+            for link in self.nodes[current_node]['outbound']:
+                new_cost = queue[current_node]['cost'] + self.links[link]['costs'][current_node]
+                if not queue[self.links[link]['opposite'][current_node]]['complete'] \
+                        and queue[self.links[link]['opposite'][current_node]]['cost'] >= new_cost:
+                    if queue[self.links[link]['opposite'][current_node]]['cost'] == new_cost:
+                        queue[self.links[link]['opposite'][current_node]]['from'].append(current_node)
+                    else:
+                        queue[self.links[link]['opposite'][current_node]]['from'] = [current_node]
+                        queue[self.links[link]['opposite'][current_node]]['cost'] = new_cost
+        # cost = queue[destination_node]['cost']
+        path = [destination_node]
+        while path[0] != origin_node:
+            path.insert(0, random.choice(queue[path[0]]['from']))
         return path
