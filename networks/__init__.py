@@ -21,10 +21,12 @@ def find_path():
     links = {int(k): v for k, v in resource['links'].items()}
     for link in links:
         links[link]['costs'] = {
-            int(links[link]['start']): links[link]['attributes']['speeds'][str(links[link]['start'])]
+            int(links[link]['start']): (links[link]['attributes']['length']
+                                        / links[link]['attributes']['speeds'][str(links[link]['start'])])
         }
         if not links[link]['attributes']['isOneWay']:
-            links[link]['costs'][int(links[link]['end'])] = links[link]['attributes']['speeds'][str(links[link]['end'])]
+            links[link]['costs'][int(links[link]['end'])] = links[link]['attributes']['length'] \
+                                                            / links[link]['attributes']['speeds'][str(links[link]['end'])]
         links[link]['opposite'] = {
             links[link]['start']: links[link]['end'],
             links[link]['end']: links[link]['start']
