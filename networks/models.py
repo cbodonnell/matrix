@@ -3,8 +3,24 @@ import math
 
 
 class Network:
-    def __init__(self, nodes, links):
+    def __init__(self, resource):
+        nodes = {int(k): v for k, v in resource['nodes'].items()}
         self.nodes = nodes
+
+        links = {int(k): v for k, v in resource['links'].items()}
+        for link in links:
+            links[link]['costs'] = {
+                int(links[link]['start']): (links[link]['attributes']['length']
+                                            / links[link]['attributes']['speeds'][str(links[link]['start'])])
+            }
+            if not links[link]['attributes']['isOneWay']:
+                links[link]['costs'][int(links[link]['end'])] = links[link]['attributes']['length'] \
+                                                                / links[link]['attributes']['speeds'][
+                                                                    str(links[link]['end'])]
+            links[link]['opposite'] = {
+                links[link]['start']: links[link]['end'],
+                links[link]['end']: links[link]['start']
+            }
         self.links = links
         # self.turn_matrix = turn_matrix
 
@@ -32,7 +48,6 @@ class Network:
                     'cost': math.inf,
                     'from': [origin_node]
                 }
-        # current_node = origin_node
         while not queue[destination_node]['complete']:
             cheapest_node = None
             lowest_cost = math.inf
