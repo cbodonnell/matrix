@@ -74,4 +74,5 @@ class Network:
                 path.insert(0, random.choice(queue[path[0]]['from']))
             return path
         except Exception as e:
+            print(e)
             return None
