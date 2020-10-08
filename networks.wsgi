@@ -5,4 +5,4 @@ logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0,"/var/www/networks/")
 sys.path.insert(0,"/var/www/networks/networks")
 
-from FlaskApp import app as application
+from networks import app as application
