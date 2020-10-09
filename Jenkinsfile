@@ -18,7 +18,6 @@ pipeline {
         stage('deploy') {
             steps {
                 echo 'deploying...'
-                sh 'sudo chmod +x ./scripts/deploy && ./scripts/deploy'
             }
         }
     }
