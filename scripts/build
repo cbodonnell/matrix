@@ -2,6 +2,6 @@
 
 sudo rsync -av --progress ./ /var/www/networks --exclude scripts --exclude working --exclude Jenkinsfile --delete
 cd /var/www/networks
-sudo virtualenv venv
+sudo python3 -m venv venv
 source venv/bin/activate
 sudo pip install -r requirements.txt
