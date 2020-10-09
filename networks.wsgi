@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/var/www/networks/venv/bin/python3
 
 activate_this = '/var/www/networks/venv/bin/activate_this.py'
 with open(activate_this) as file_:
