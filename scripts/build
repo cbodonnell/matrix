@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo rsync -av --progress ./ /var/www/networks --exclude scripts --exclude working --exclude Jenkinsfile --delete
+sudo rsync -av --progress ./ /var/www/networks --exclude .git --exclude scripts --exclude working --exclude Jenkinsfile --delete
 cd /var/www/networks/networks
 sudo virtualenv venv
 source venv/bin/activate
