@@ -1,8 +1,7 @@
 #!/bin/bash
 
-sudo rsync -av --progress ./ /media/PI-EXT/web/networks --exclude scripts --exclude working --exclude Jenkinsfile --delete
-cd /media/PI-EXT/web/networks
-sudo python3 -m venv venv
-sudo wget https://raw.githubusercontent.com/naztronaut/RaspberryPi-RGBW-Control/master/utils/activate_this.py -P venv/bin
+sudo rsync -av --progress ./ /var/www/networks --exclude scripts --exclude working --exclude Jenkinsfile --delete
+cd /var/www/networks/networks
+sudo virtualenv venv
 source venv/bin/activate
-sudo venv/bin/pip3 install -r requirements.txt
+sudo pip install -r requirements.txt
