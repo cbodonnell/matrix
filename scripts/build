@@ -1,9 +1,9 @@
 #!/bin/bash
 
 sudo systemctl stop nst-path-api
-sudo rsync -av --progress ./ /etc/nst-path-api --exclude scripts --exclude working --exclude Jenkinsfile --delete --filter='P .env' --filter='P venv/'
+sudo rsync -av --progress ./ /etc/nst-path-api --exclude scripts --exclude working --exclude Jenkinsfile --delete --filter='P .env'
 cd /etc/nst-path-api/nst_path_api
-sudo python3 venv venv
+sudo python3 -m venv venv
 source venv/bin/activate
 sudo pip install -r requirements.txt
 sudo systemctl start nst-path-api
