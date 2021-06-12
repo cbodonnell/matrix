@@ -6,5 +6,6 @@ sudo chown jenkins -R /etc/nst-path-api
 cd /etc/nst-path-api
 python3 -m venv venv
 source venv/bin/activate
+pip install wheel uwsgi
 pip install -r requirements.txt
 sudo systemctl start nst-path-api
