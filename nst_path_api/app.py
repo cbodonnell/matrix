@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
 
-from networks.path_blueprint import path_blueprint
+from nst_path_api.path_blueprint import path_blueprint
 
 
-def create_app(config_object="networks.settings"):
+def create_app(config_object="nst_path_api.settings"):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
     :param config_object: The configuration object to use.
     """

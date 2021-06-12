@@ -1,5 +1,5 @@
 import numpy as np
-from networks.models import Network
+from nst_path_api.models import Network
 import random
 import math
 import time

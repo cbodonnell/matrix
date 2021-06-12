@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request, jsonify
-from networks.models import Network
+from nst_path_api.models import Network
 
 
 path_blueprint = Blueprint('example_blueprint', __name__)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Create an application instance."""
-from networks.app import create_app
+from nst_path_api.app import create_app
 
 app = create_app()
 
