@@ -5,5 +5,5 @@ sudo rsync -av --progress ./ /etc/nst-path-api --exclude scripts --exclude worki
 cd /etc/nst-path-api/nst_path_api
 sudo python3 -m venv venv
 source venv/bin/activate
-sudo pip install -r requirements.txt
+sudo python3 -m pip install -r requirements.txt
 sudo systemctl start nst-path-api
