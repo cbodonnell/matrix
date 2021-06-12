@@ -8,7 +8,7 @@ path_blueprint = Blueprint('example_blueprint', __name__)
 
 @path_blueprint.route('/api/hello', methods=['GET'])
 def hello():
-    return 'Hello world! This was updated on 10/08/2020.'
+    return 'Hello world! This was updated on 06/12/2021.'
 
 
 @path_blueprint.route('/api/path', methods=['POST'])
