@@ -5,6 +5,7 @@ sudo rsync -av --progress ./ /etc/nst-path-api --exclude scripts --exclude worki
 cd /etc/nst-path-api
 python3 -m venv venv
 source venv/bin/activate
-pip install wheel uwsgi
+pip install wheel
+pip install uwsgi
 pip install -r requirements.txt
 sudo systemctl start nst-path-api
