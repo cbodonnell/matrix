@@ -2,7 +2,6 @@
 
 sudo systemctl stop nst-path-api
 sudo rsync -av --progress ./ /etc/nst-path-api --exclude scripts --exclude working --exclude Jenkinsfile --delete --filter='P .env'
-sudo chown jenkins -R /etc/nst-path-api
 cd /etc/nst-path-api
 python3 -m venv venv
 source venv/bin/activate
